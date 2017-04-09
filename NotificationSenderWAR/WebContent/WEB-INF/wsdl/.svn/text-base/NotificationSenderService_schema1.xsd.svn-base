@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://services.notificationsender.digitel.com.ve/" xmlns:tns="http://services.notificationsender.digitel.com.ve/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="executeNotificationSenderService" type="tns:executeNotificationSenderService"/>
+
+  <xs:element name="executeNotificationSenderServiceResponse" type="tns:executeNotificationSenderServiceResponse"/>
+
+  <xs:complexType name="executeNotificationSenderService">
+    <xs:sequence>
+      <xs:element name="NotificationSenderRequest" type="tns:notificationSenderRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="notificationSenderRequest">
+    <xs:sequence>
+      <xs:element name="customerOrder" type="tns:customerOrder"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="customerOrder">
+    <xs:sequence>
+      <xs:element name="id" type="xs:string"/>
+      <xs:element name="orderItemNumber" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="customerOrderType" type="xs:string" minOccurs="0"/>
+      <xs:element name="customerOrderStatus" type="xs:string" minOccurs="0"/>
+      <xs:element name="purchaseOrderNumber" type="xs:string" minOccurs="0"/>
+      <xs:element name="interactionDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+      <xs:element name="customerOrderItem" type="tns:customerOrderItem" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="partyInteractionRole" type="tns:partyInteractionRole" minOccurs="0"/>
+      <xs:element name="functionalMessage" type="tns:functionalMessage" minOccurs="0"/>
+      <xs:element name="errorMessage" type="tns:errorMessage" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="customerOrderItem">
+    <xs:sequence>
+      <xs:element name="id" type="xs:string" minOccurs="0"/>
+      <xs:element name="action" type="xs:string" minOccurs="0"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+      <xs:element name="customerAccountInteractionRole" type="tns:customerAccountInteractionRole" maxOccurs="unbounded"/>
+      <xs:element name="partyInteractionRole" type="tns:partyInteractionRole" minOccurs="0"/>
+      <xs:element name="functionalMessage" type="tns:functionalMessage" minOccurs="0"/>
+      <xs:element name="errorMessage" type="tns:errorMessage" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="customerAccountInteractionRole">
+    <xs:sequence>
+      <xs:element name="interactionRole" type="xs:string" minOccurs="0"/>
+      <xs:element name="customerAccount" type="tns:customerAccount"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="customerAccount">
+    <xs:sequence>
+      <xs:element name="id" type="xs:string"/>
+      <xs:element name="accountStatus" type="xs:string" minOccurs="0"/>
+      <xs:element name="accountType" type="xs:string" minOccurs="0"/>
+      <xs:element name="accountNumber" type="xs:int" minOccurs="0"/>
+      <xs:element name="vipCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="payment" type="tns:payment" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="cardPM" type="tns:cardPM" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="payment">
+    <xs:sequence>
+      <xs:element name="id" type="xs:string"/>
+      <xs:element name="confirmationNumber" type="xs:long" minOccurs="0"/>
+      <xs:element name="amount" type="xs:double"/>
+      <xs:element name="paymentDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="cardPM" type="tns:cardPM" minOccurs="0"/>
+      <xs:element name="thirdPartyPayeeAgency" type="tns:thirdPartyPayeeAgency" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="cardPM">
+    <xs:sequence>
+      <xs:element name="id" type="xs:string" minOccurs="0"/>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+      <xs:element name="paymentMethodType" type="xs:string"/>
+      <xs:element name="cvv" type="xs:int" minOccurs="0"/>
+      <xs:element name="cardHolderName" type="xs:string" minOccurs="0"/>
+      <xs:element name="idCardHolderName" type="xs:string" minOccurs="0"/>
+      <xs:element name="cardNumber" type="xs:string"/>
+      <xs:element name="addresses" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="thirdPartyPayeeAgency">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="organization" type="tns:organization"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="organization">
+    <xs:sequence>
+      <xs:element name="organizationId" type="xs:int" minOccurs="0"/>
+      <xs:element name="name" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="partyInteractionRole">
+    <xs:sequence>
+      <xs:element name="partyRole" type="tns:partyRole" maxOccurs="unbounded"/>
+      <xs:element name="interactionRole" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="partyRole">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="party" type="tns:party" minOccurs="0"/>
+      <xs:element name="emailContact" type="tns:emailContact" maxOccurs="unbounded"/>
+      <xs:element name="iPAddress" type="tns:ipAddress" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="party">
+    <xs:sequence>
+      <xs:element name="partyId" type="xs:int" minOccurs="0"/>
+      <xs:element name="name" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="emailContact">
+    <xs:sequence>
+      <xs:element name="eMailAddress" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ipAddress">
+    <xs:sequence>
+      <xs:element name="networkNumber" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="functionalMessage">
+    <xs:sequence>
+      <xs:element name="code" type="xs:string"/>
+      <xs:element name="message" type="xs:string"/>
+      <xs:element name="causeCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="causeMessage" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="errorMessage">
+    <xs:sequence>
+      <xs:element name="code" type="xs:string"/>
+      <xs:element name="message" type="xs:string"/>
+      <xs:element name="trace" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="executeNotificationSenderServiceResponse">
+    <xs:sequence>
+      <xs:element name="NotificationSenderResponse" type="tns:notificationSenderResponseACK"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="notificationSenderResponseACK">
+    <xs:sequence>
+      <xs:element name="customerOrder" type="tns:customerOrder"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+ 
+<beans>
+  <bean id="beanFactory" class="org.springframework.context.support.ClassPathXmlApplicationContext">
+    <constructor-arg>
+      <list>   
+      	<value>/ve/com/digitel/notificationsender/conf/spring/applicationContextUtil.xml</value>
+      	<value>/ve/com/digitel/notificationsender/conf/spring/applicationContextProxy.xml</value>
+		<value>/ve/com/digitel/notificationsender/conf/spring/applicationContextEvent.xml</value>
+      	<value>/ve/com/digitel/notificationsender/conf/spring/applicationContextDelegator.xml</value>
+      	<value>/ve/com/digitel/notificationsender/conf/spring/applicationContextQueue.xml</value>      	      	
+      </list>
+    </constructor-arg>
+  </bean>
+</beans>

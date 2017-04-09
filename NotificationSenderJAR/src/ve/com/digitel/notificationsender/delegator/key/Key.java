@@ -1,0 +1,17 @@
+package ve.com.digitel.notificationsender.delegator.key;
+
+public enum Key {
+	
+	REQUEST,
+	RESPONSE,
+	
+	//Message
+	EXCEPTION,
+	EXCEPTION_CAUSE_CODE,
+	EXCEPTION_CAUSE_MESSAGE,
+	EXCEPTION_CODE,
+	EXCEPTION_DESCRIPTION,
+	EXCEPTION_TRACE,
+	ERROR_MESSAGE,
+	FUNCTIONAL_MESSAGE
+}

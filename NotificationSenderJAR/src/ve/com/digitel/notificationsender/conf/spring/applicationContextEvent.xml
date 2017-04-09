@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+    
+    
+	<!-- //////////////////////////////////Application Listener////////////////////////////////// -->    
+       
+    <bean id="actionProcessListener" class="ve.com.digitel.notificationsender.event.ActionProcessListener" 
+    								 depends-on="validationMessageDelegator"
+									 p:delegator-ref="validationMessageDelegator"/>
+   
+   <!-- //////////////////////////////////Async Task Executor////////////////////////////////// -->
+    
+   <bean id="asyncExec" class="org.springframework.core.task.SimpleAsyncTaskExecutor" />
+    
+    <!-- //////////////////////////////////Event Multicaster////////////////////////////////// -->   
+    
+   	<bean id="actionProcessEventMulticaster" class="ve.com.digitel.notificationsender.event.ActionProcessEventMulticaster"
+										   	p:listener-ref="actionProcessListener" 
+										   	p:taskExecutor-ref="asyncExec"/>
+    
+</beans>

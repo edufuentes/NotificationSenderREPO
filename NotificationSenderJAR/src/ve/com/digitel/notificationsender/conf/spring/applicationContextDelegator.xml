@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+							
+    <context:annotation-config />
+    
+<!--  
+		- Define the Delegator actions rules business.
+ --> 
+    
+    <!--  
+    		- Step 1
+    -->  
+	<bean id="validationMessageDelegator" 
+							class="ve.com.digitel.notificationsender.delegator.ValidationMessageDelegator"
+							init-method="init"
+							p:positiveOutcomeStep-ref="consultGetCacheDelegator"
+							p:negativeOutcomeStep-ref="processFailAction">
+    						<constructor-arg type="java.lang.String" value="Iniciando validationMessageDelegator" />
+    </bean>
+
+	<!--  
+    		- Step 2
+    -->  
+	<bean id="consultGetCacheDelegator" 
+							class="ve.com.digitel.notificationsender.delegator.ConsultGetCacheDelegator"
+							init-method="init"
+							p:positiveOutcomeStep-ref="processSucessfulAction"
+							p:negativeOutcomeStep-ref="processFailAction" depends-on="mapTemplateCache">
+    						<constructor-arg type="java.lang.String" value="Iniciando consultGetCache" />
+    </bean>  
+   
+    
+    <!--  
+		- Define the Cache Object.
+ --> 
+    
+    <bean id="loaderDefinitionCacheDelegator" class="ve.com.digitel.notificationmailsender.initcache.LoaderDefinitionCacheDelegator" 
+    depends-on="dataSource" p:dataSource-ref="dataSource" />
+
+	<bean id="mapTemplateCache" factory-bean="loaderDefinitionCacheDelegator" factory-method="loadDefinitionCache" />
+    
+<!--  
+		- Define the finals actions rules business.
+ --> 
+    <!--  
+    		- Bean : Component that execute the failures control actions.
+    -->    
+    <bean id="processFailAction" class="ve.com.digitel.notificationsender.delegator.ProcessFailAction" 
+    							init-method="init">
+        <constructor-arg type="java.lang.String" value="" />
+    </bean>
+    <!--  
+    		- Bean : Component that execute the failures False control actions.
+    -->  
+    <bean id="processFailFalseAction" class="ve.com.digitel.notificationsender.delegator.ProcessFailFalseAction" 
+    							init-method="init">
+        <constructor-arg type="java.lang.String" value="" />
+    </bean>
+    <!--  
+       		- Bean : Component that send Sucessful message.
+     -->  
+    <bean id="processSucessfulAction" class="ve.com.digitel.notificationsender.delegator.ProcessSucessfulAction" 
+    							init-method="init">
+        <constructor-arg type="java.lang.String" value="" />
+    </bean>  
+       
+</beans>

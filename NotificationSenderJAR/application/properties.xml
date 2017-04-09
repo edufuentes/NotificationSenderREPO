@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+<!-- Propiedades para la configuracion de los servicios NotificationSender -->
+
+<comment>WebService NotificationSender</comment>
+		
+<!-- Errores Funcionales -->
+<entry key="ERROR_FUN_00">BCRM-03003-OM0000</entry>
+<entry key="BCRM-03003-OM0000">Operacion Exitosa</entry>
+<entry key="ERROR_FUN_01">BCRM-03003-OM0001</entry>
+<entry key="BCRM-03003-OM0001">Datos de entrada invalidos</entry>
+<entry key="ERROR_FUN_05">BCRM-03003-OM0005</entry>
+<entry key="BCRM-03003-OM0005">Operacion en proceso</entry>
+
+<!-- Propiedades Errores Tecnicos -->
+<entry key="ERROR_TEC_01">BCRM-03003-EM0003</entry>
+<entry key="BCRM-03003-EM0003">Error de ejecucion</entry>
+<entry key="ERROR_TEC_02">BCRM-03003-EM0004</entry>
+<entry key="BCRM-03003-EM0004">Error de comunicacion</entry>
+
+
+
+<!-- Configuracion de la JMS: manejo asincrono de request ACK -->
+<entry key="XML_TAG_CONTEXT_PROVIDER_URL">t3://localhost:7001</entry>
+<entry key="XML_TAG_CONTEXT_INITIAL_CONTEXT_FACTORY">weblogic.jndi.WLInitialContextFactory</entry>
+
+<!-- Cola  Process -->  
+<entry key="XML_TAG_CONNECTION_FACTORY_PROCESS">notificationsenderprocess.jms.factory</entry>
+<entry key="XML_TAG_QUEUE_PROCESS">notificationsenderprocess.jms.queue</entry>
+
+<!-- Reintentos -->  
+<entry key="ATTEMPTS">3</entry>
+<!-- Tiempo de Espera -->  
+<entry key="WAIT_TIME">500</entry>
+
+
+<!-- Validacion de datos de entrada - Step 1 -->
+<entry key="BENEFICIARY">BENEFICIARY</entry>
+<entry key="AFFILIATE">AFFILIATE</entry>
+<entry key="EMAIL">EMAIL</entry>
+
+<!-- Propiedades para la configuracion del Cache  SP_NETWORK_COMMAND_RES_PARAM -->
+<entry key="SP_LOAD_DATA_CACHE">{ call PKG_SendNoticeService.SP_GET_RULE_NOTICE(?,?,?) }</entry> 
+
+<!-- Tipos de mensajes a enviar -->
+<entry key="NOTICE_TYPE_SMS">sms</entry>
+<entry key="NOTICE_TYPE_EMAIL">email</entry>
+
+<!-- Propiedades para el envio de Email SMTP Server -->
+<entry key="MAIL_EMAIL_ADMIN">noreply@digitel.com.ve</entry>
+
+<!-- Propiedades para la configuracion del Email SMTP Server -->
+<entry key="MAIL_MODE">NO-AUTH</entry><!-- NO-AUTH = NO AUTENTICADO Y AUTH= AUTENTICADO (REQUIERE USER Y PASSWORD) -->
+<entry key="MAIL_DEBUG">FALSE</entry>
+<entry key="MAIL_SMTP_SERVER_SENDER">USER</entry>
+<entry key="MAIL_SMTP_SERVER_PSWD">PASSWORD</entry>
+<entry key="MAIL_SMTP_SERVER_HOST">10.20.20.181</entry>
+<entry key="MAIL_SMTP_SERVER_PORT">25</entry>
+
+<!-- Reintentos para el Proxy SMTP -->  
+<entry key="PSMTP_ATTEMPTS">3</entry>
+<!-- Tiempo de Espera -->  
+<entry key="PSMTP_WAIT_TIME">500</entry>
+
+<!-- SPLIT  -->
+<entry key="SPLIT_EMAIL">,</entry>
+<entry key="SPLIT_SMS">,</entry>
+
+
+<!-- Propiedades del SMSSENDER -->
+<entry key="ATTEMPS_HTTPPOST">3</entry>
+<entry key="TIMEOUT_HTTPPOST">500</entry>
+
+<entry key="SMSSENDER_ENPOINT">http://10.27.31.224:7011/SMS/SOAPServlet</entry>
+<entry key="TIMEOUT">500</entry>
+<entry key="SO_TIMEOUT">2000</entry>
+
+<entry key="DATE_FORMAT_SMSSENDER">yyyy-MM-dd hh:mm:ss</entry>
+
+<!-- SMSSender Template -->
+<entry key="REQUEST_SMS_SENDER"><![CDATA[
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sms="http://www.digitel.com.ve/sms-sender/" xmlns:sms1="http://www.digitel.com.ve/integracion/SMSWEB">
+		<soapenv:Header/>
+		<soapenv:Body>
+			<sms:parameters>
+				<sms1:header>
+					<sms1:traceId>TRACEID_VALUE</sms1:traceId>
+					<!--Optional:-->
+					<sms1:submitTime>SYSDATE1_VALUE</sms1:submitTime>
+					<sms1:userId>test</sms1:userId> 
+					<sms1:password>t3sprsms</sms1:password> 
+				 </sms1:header>
+				 <sms1:body>
+					<sms1:sender>TEST</sms1:sender> 
+					<!--Optional:-->
+					<sms1:callBackNum>584128083439</sms1:callBackNum>
+					<!--Optional:-->
+					<sms1:priority>0</sms1:priority>
+					<!--Optional:-->
+					<sms1:ttl>3</sms1:ttl>
+					<!--Optional:-->
+					<sms1:validityPeriod>SYSDATE2_VALUE</sms1:validityPeriod>
+					<!--Optional:-->
+					<sms1:encoding>0000</sms1:encoding>
+					<sms1:payload>MESSAGE_VALUE</sms1:payload>
+					<sms1:destinations>
+					   <!--1 or more repetitions:-->
+					   <sms1:destination>58GSM_SUBSCRIBER_VALUE</sms1:destination> 
+					</sms1:destinations>
+				</sms1:body>
+			</sms:parameters>
+		</soapenv:Body>
+	</soapenv:Envelope>]]>
+</entry>
+
+<!-- RESPONSE ACK SMS SENDER -->
+<entry key="RESPONSE_ACK">Process completed successfully</entry>
+
+<!-- Formato de fecha para los mensajes a los clientes -->
+<entry key="TIME_FORMAT">dd/MM/yyyy</entry>
+
+<!-- TOKEN para el reemplazo interno de los mensajes  -->
+<entry key="TOKEN_MESSAGE">%Mensaje</entry>
+
+<!-- TOKEN para el reemplazo interno de los mensajes con Fecha -->
+<entry key="TOKEN_DATE">%F</entry>
+
+<!-- TOKEN para el reemplazo interno del Monto -->
+<entry key="TOKEN_AMOUNT">%Monto</entry>
+
+<!-- TOKEN para el reemplazo interno del tipo de tarjeta -->
+<entry key="TOKEN_TYPE_CARD">%Tipotarjeta</entry>
+
+<!-- TOKEN para el reemplazo interno del numero de tarjeta -->
+<entry key="TOKEN_CARD_NUMBER">%NTarjeta</entry> 
+
+<!-- Validacion de Funcionalidad -->
+<entry key="BILL_PAYMENT">Pago de Factura</entry> 
+<entry key="VIRTUAL_RECHARGE">Recarga Web</entry> 
+<entry key="PAYMENT_METHOD">Afiliacion de Metodo de Pago</entry> 
+<entry key="DELETE">Eliminar</entry> 
+<entry key="UPDATE">Modificar</entry> 
+<entry key="ADD">Agregar</entry> 
+
+<!-- Trasnform TYPE CARD --> 
+<entry key="TRANSFORM_CREDIT">CREDIT</entry> 
+<entry key="CREDIT"><![CDATA[Tarjeta de Cr&eacute;dito]]></entry> 
+<entry key="TRANSFORM_DEBIT">DEBIT</entry> 
+<entry key="DEBIT"><![CDATA[Tarjeta de D&eacute;bito]]></entry> 
+
+<!-- Validacion para el envio de mensaje en Afiliacion de Servicio -->
+<entry key="AFFILIATION_SERVICE">Afiliacion de Servicios</entry> 
+
+
+
+
+</properties>
